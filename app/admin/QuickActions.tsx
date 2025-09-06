@@ -41,10 +41,12 @@ export default function QuickActions() {
       {activeModal === "clientProject" && (
         <ClientProjectModal onCloseAction={closeModal} />
       )}
+      {activeModal === "user" && (
+        <UserModal onCloseAction={closeModal} />
+      )}
       {activeModal === "portfolio" && (
         <PortfolioModal onCloseAction={closeModal} />
       )}
-      {activeModal === "user" && <UserModal onCloseAction={closeModal} />}
       {activeModal === "blogPost" && (
         <BlogPostModal onCloseAction={closeModal} />
       )}

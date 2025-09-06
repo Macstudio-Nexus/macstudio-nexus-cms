@@ -36,15 +36,15 @@ export default function BlogModal({
   }
 
   return (
-    <div className="z-50 fixed bottom-1 bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] w-7/8 shadow-lg">
+    <div className="z-50 fixed bottom-1 sm:right-[5vh] sm:bottom-[15vh] bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] sm:h-[75vh] w-7/8 shadow-lg">
       <div className="flex flex-col items-center">
-        <h2 className="text-2xl font-jetbrains font-bold text-dark">
+        <h2 className="text-2xl sm:text-4xl font-jetbrains font-bold text-dark">
           Create New Blog Post
         </h2>
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-1 px-6 pt-2 overflow-y-auto max-h-140 min-w-80"
+          className="flex flex-col gap-1 px-6 pt-2 overflow-y-auto max-h-140 sm:max-h-180"
         >
           <input
             type="text"
@@ -52,7 +52,7 @@ export default function BlogModal({
             placeholder="Blog Post Title"
             value={formData.Title}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
             required
           />
 
@@ -62,7 +62,7 @@ export default function BlogModal({
             placeholder="Author Name"
             value={formData.Author}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
             required
           />
 
@@ -71,7 +71,7 @@ export default function BlogModal({
             placeholder="Blog post content..."
             value={formData.Content}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source min-h-32 h-32 resize-none"
+            className="inputfield min-h-32 h-32 resize-none"
             rows={8}
             maxLength={5000}
             required
@@ -82,7 +82,7 @@ export default function BlogModal({
             type="file"
             name="Image"
             onChange={handleFileChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
             accept=".jpg,.png,.webp,.jpeg"
           />
 
@@ -92,7 +92,7 @@ export default function BlogModal({
             name="PublishedDate"
             value={formData.PublishedDate}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
             required
           />
 
@@ -102,7 +102,7 @@ export default function BlogModal({
             required
             value={formData.Category}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           >
             <option value="">Select Category</option>
             <option value="webDevelopment">Web Development</option>
@@ -112,13 +112,13 @@ export default function BlogModal({
           <div className="flex items-center justify-around pt-4">
             <button
               type="submit"
-              className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
+              className="formButton"
             >
               Create Blog Post
             </button>
 
             <button
-              className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
+              className="formButton"
               onClick={onCloseAction}
             >
               Close

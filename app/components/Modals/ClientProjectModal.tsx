@@ -37,15 +37,15 @@ export default function ClientProjectModal({
   };
 
   return (
-    <div className="z-50 fixed bottom-1 bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] w-7/8 shadow-lg">
+    <div className="z-50 fixed bottom-1 sm:right-[5vh] sm:bottom-[10vh] bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] sm:h-[75vh] w-7/8 shadow-lg">
       <div className="flex flex-col items-center">
-        <h2 className="text-2xl font-jetbrains font-bold text-dark">
+        <h2 className="text-2xl sm:text-4xl sm:pb-4 font-jetbrains font-bold text-dark">
           New Client Project
         </h2>
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-1 px-6 pt-2 overflow-y-auto max-h-140"
+          className="flex flex-col gap-1 px-6 pt-2 overflow-y-auto max-h-140 sm:max-h-180"
         >
           <input
             type="text"
@@ -54,7 +54,7 @@ export default function ClientProjectModal({
             placeholder="Project Name"
             value={formData.ProjectName}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           />
 
           <select
@@ -62,7 +62,7 @@ export default function ClientProjectModal({
             required
             value={formData.User}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           >
             <option value="">Select User</option>
             <option value="User1">User 1</option>
@@ -75,7 +75,7 @@ export default function ClientProjectModal({
             placeholder="Project Description"
             value={formData.Description}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black min-h-20 h-20 resize-none font-source"
+            className="inputfield min-h-20 h-20 resize-none"
             rows={4}
             maxLength={1000}
           />
@@ -85,7 +85,7 @@ export default function ClientProjectModal({
             required
             value={formData.ProjectType}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           >
             <option value="">Select Project Type</option>
             <option value="webDevelopment">Web Development</option>
@@ -100,7 +100,7 @@ export default function ClientProjectModal({
             required
             value={formData.StartDate}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           />
 
           <span className="text-sm font-medium text-dark">Due Date</span>
@@ -109,7 +109,7 @@ export default function ClientProjectModal({
             name="EndDate"
             value={formData.EndDate}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           />
 
           <span className="text-sm font-medium text-dark">Attachments</span>
@@ -118,19 +118,19 @@ export default function ClientProjectModal({
             name="Attachments"
             multiple
             onChange={handleFileChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
             accept=".pdf,.doc,.docx,.jpg,.png,.zip"
           />
 
           <div className="flex items-center justify-around pt-4">
             <button
               type="submit"
-              className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
+              className="formButton"
             >
               Add Project
             </button>
             <button
-              className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
+              className="formButton"
               onClick={onCloseAction}
             >
               Close

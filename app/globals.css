@@ -18,17 +18,16 @@
   .buttonPrimary {
     @apply bg-secondary text-black font-source flex items-center justify-around rounded-lg hover:bg-dark transition-transform duration-150 active:scale-95;
   }
-
   .buttonSecondary {
     @apply bg-transparent text-dark font-bold font-source flex items-center justify-around rounded-lg hover:bg-dark hover:text-white border-1 border-dark transition-transform duration-150 active:scale-95;
   }
-
-  .button {
-        @apply font-bold font-source flex items-center justify-around rounded-lg border-1 transition-transform duration-150 active:scale-95;
-
-  }
   .stats {
-    @apply flex flex-col items-center bg-off-black rounded-xl p-1
+    @apply flex flex-col items-center bg-off-black rounded-xl p-1;
   }
-
+  .inputfield {
+    @apply w-full border p-2 sm:p-4 rounded bg-gray-trans text-black font-source;
+  }
+  .formButton {
+    @apply py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark rounded-xl font-source sm:text-xl;
+  }
 }

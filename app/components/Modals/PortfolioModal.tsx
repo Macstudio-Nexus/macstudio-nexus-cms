@@ -37,9 +37,9 @@ export default function ClientProjectModal({
   };
 
   return (
-    <div className="z-50 fixed bottom-1 bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] w-7/8 shadow-lg">
+    <div className="z-50 fixed bottom-1 sm:right-[5vh] sm:bottom-[15vh] bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] sm:h-[75vh] w-7/8 shadow-lg">
       <div className="flex flex-col items-center">
-        <h2 className="text-2xl font-jetbrains font-bold text-center text-dark">
+        <h2 className="text-2xl sm:text-3xl sm:pb-4 font-jetbrains font-bold text-center text-dark">
           New Macstudio Portfolio Post
         </h2>
 
@@ -54,7 +54,7 @@ export default function ClientProjectModal({
             placeholder="Title"
             value={formData.Title}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           />
 
           <select
@@ -62,7 +62,7 @@ export default function ClientProjectModal({
             required
             value={formData.User}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           >
             <option value="">Select User</option>
             <option value="User1">User 1</option>
@@ -85,7 +85,7 @@ export default function ClientProjectModal({
             required
             value={formData.ProjectType}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           >
             <option value="">Choose a Project Type</option>
             <option value="webDevelopment">Web Development</option>
@@ -97,7 +97,7 @@ export default function ClientProjectModal({
             required
             value={formData.Project}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           >
             <option value="">Select a Project</option>
             <option value="Project1">Project 1</option>
@@ -111,7 +111,7 @@ export default function ClientProjectModal({
             name="Link"
             value={formData.Link}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           />
 
           <span className="text-sm font-medium text-dark">Image</span>
@@ -120,20 +120,20 @@ export default function ClientProjectModal({
             required
             name="Image"
             onChange={handleFileChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
             accept=".pdf,.doc,.docx,.jpg,.png,.zip"
           />
 
           <div className="flex items-center justify-around pt-4">
             <button
               type="submit"
-              className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
+              className="formButton"
             >
               Add Portfolio
             </button>
 
             <button
-              className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
+              className="formButton"
               onClick={onCloseAction}
             >
               Close

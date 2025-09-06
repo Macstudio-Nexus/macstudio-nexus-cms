@@ -32,15 +32,15 @@ export default function UserModal({
   }
 
   return (
-    <div className="z-50 fixed bottom-1 bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] w-7/8 shadow-lg">
+    <div className="z-50 fixed bottom-1 sm:right-[5vh] sm:bottom-[15vh] bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] sm:h-[75vh] w-7/8 shadow-lg">
       <div className="flex flex-col items-center">
-        <h2 className="text-2xl font-jetbrains font-bold text-dark">
+        <h2 className="text-2xl sm:text-3xl sm:pb-4 font-jetbrains font-bold text-center text-dark">
           Add New User
         </h2>
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-1 px-6 pt-2 overflow-y-auto max-h-140 min-w-80"
+          className="flex flex-col gap-1 px-6 pt-2 overflow-y-auto max-h-150"
         >
           <input
             type="text"
@@ -48,7 +48,8 @@ export default function UserModal({
             placeholder="Main Contact Name"
             value={formData.Name}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
+            required
           />
 
           <input
@@ -57,7 +58,7 @@ export default function UserModal({
             placeholder="Phone Number"
             value={formData.PhoneNumber}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           />
 
           <input
@@ -66,7 +67,8 @@ export default function UserModal({
             placeholder="Email Address"
             value={formData.Email}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield "
+            required
           />
 
           <input
@@ -75,7 +77,8 @@ export default function UserModal({
             placeholder="Temporary Password"
             value={formData.Password}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
+            required
           />
 
           <input
@@ -84,16 +87,17 @@ export default function UserModal({
             placeholder="Business Name"
             value={formData.BusinessName}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           />
 
-          <input
-            type="text"
+          <textarea
             name="Service"
             placeholder="Business Service Type"
             value={formData.Service}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield min-h-20 h-20 resize-none"
+            rows={4}
+            maxLength={1000}
           />
 
           <span className="text-sm font-medium text-dark">Role</span>
@@ -102,7 +106,7 @@ export default function UserModal({
             required
             value={formData.Role}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
+            className="inputfield"
           >
             <option value="">Select Role</option>
             <option value="user">User</option>
@@ -111,20 +115,24 @@ export default function UserModal({
           </select>
 
           <div className="flex items-center justify-around pt-4">
-            <button
-              type="submit"
-              className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
-            >
+            <button type="submit" className="formButton">
               Add User
             </button>
 
-            <button
-              className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
-              onClick={onCloseAction}
-            >
+            <button className="formButton" onClick={onCloseAction}>
               Close
             </button>
           </div>
+
+          {/* for spacing */}
+          <input
+            type="file"
+            required
+            name="Image"
+            // onChange={handleFileChange}
+            className="bg-transparent text-transparent"
+            accept=".pdf,.doc,.docx,.jpg,.png,.zip"
+          />
         </form>
       </div>
     </div>
