@@ -1,19 +1,132 @@
+"use client";
+
+import { useState } from "react";
+import { set } from "react-hook-form";
+
 export default function ClientProjectModal({
-  onClose,
+  onCloseAction,
 }: {
-  onClose: () => void;
+  onCloseAction: () => void;
 }) {
+  const [formData, setFormData] = useState({
+    User: "",
+    ProjectName: "",
+    ProjectType: "",
+    Description: "",
+    StartDate: "",
+    EndDate: "",
+    Attachments: [] as File[],
+  });
+
+  function handleChange(
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log("Form Data Submitted:", formData);
+    // Here you would typically handle form submission, e.g., send data to a server
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(e.target.files || []);
+    setFormData({ ...formData, Attachments: selectedFiles });
+  };
+
   return (
-    <div className="z-50 fixed bottom-20 bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-3/4 w-7/8 shadow-lg">
-      <div className="flex flex-col items-center gap-5">
-        <h2 className="text-2xl font-jetbrains font-bold text-dark">Add Client Project</h2>
+    <div className="z-50 fixed bottom-1 bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] w-7/8 shadow-lg">
+      <div className="flex flex-col items-center">
+        <h2 className="text-2xl font-jetbrains font-bold text-dark">
+          Add Client Project
+        </h2>
 
-        <form className="flex flex-col gap-4 w-3/4">
-        
+        <form onSubmit={handleSubmit} className="flex flex-col gap-1 p-6 overflow-y-auto max-h-140">
+          <input
+            type="text"
+            name="ProjectName"
+            placeholder="Project Name"
+            value={formData.ProjectName}
+            onChange={handleChange}
+            className="w-full border p-2 rounded bg-gray-trans text-black"
+          />
+          <span className="text-sm font-medium text-dark">Choose a user</span>
+          <select
+            name="User"
+            value={formData.User}
+            onChange={handleChange}
+            className="w-full border p-2 rounded bg-gray-trans text-black"
+          >
+            <option value="User1">User 1</option>
+            <option value="User2">User 2</option>
+            <option value="User3">User 3</option>
+          </select>
+          <textarea
+            name="Description"
+            placeholder="Project Description"
+            value={formData.Description}
+            onChange={handleChange}
+            className="w-full border p-2 rounded bg-gray-trans text-black min-h-24 resize-none"
+            rows={4}
+            maxLength={1000}
+          />
+          <span className="text-sm font-medium text-dark">Project type</span>
+          <select
+            name="ProjectType"
+            value={formData.ProjectType}
+            onChange={handleChange}
+            className="w-full border p-2 rounded bg-gray-trans text-black"
+          >
+            <option value="webDevelopment">Web Development</option>
+            <option value="Branding">Branding</option>
+          </select>
+          <span className="text-sm font-medium text-dark">Start Date</span>
+
+          <input
+            type="date"
+            name="StartDate"
+            placeholder="Start Date"
+            value={formData.StartDate}
+            onChange={handleChange}
+            className="w-full border p-2 rounded bg-gray-trans text-black"
+          />
+          <span className="text-sm font-medium text-dark">Due Date</span>
+          <input
+            type="date"
+            name="EndDate"
+            value={formData.EndDate}
+            onChange={handleChange}
+            className="w-full border p-2 rounded bg-gray-trans text-black"
+          />
+                    <span className="text-sm font-medium text-dark">Attachments</span>
+
+          <input
+            type="file"
+            name="Attachments"
+            multiple
+            onChange={handleFileChange}
+            className="w-full border p-2 rounded bg-gray-trans text-black"
+            accept=".pdf,.doc,.docx,.jpg,.png,.zip"
+          />
+          <div className="flex items-center justify-around">
+            <button
+              type="submit"
+              className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
+            >
+              Add Project
+            </button>
+
+            <button
+              className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
+              onClick={onCloseAction}
+            >
+              Close
+            </button>
+          </div>
         </form>
-          
-
-        <button className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark" onClick={onClose}>Close</button>
       </div>
     </div>
   );

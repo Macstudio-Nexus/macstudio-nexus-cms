@@ -36,7 +36,7 @@ export default function QuickActions() {
       </div>
 
       {activeModal === "clientProject" && (
-        <ClientProjectModal onClose={closeModal} />
+        <ClientProjectModal onCloseAction={closeModal} />
       )}
     </>
   );
