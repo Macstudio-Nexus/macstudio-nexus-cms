@@ -49,20 +49,22 @@ export default function ClientProjectModal({
         >
           <input
             type="text"
+            required
             name="Title"
             placeholder="Title"
             value={formData.Title}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black"
+            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
           />
 
-          <span className="text-sm font-medium text-dark">Choose a user</span>
           <select
             name="User"
+            required
             value={formData.User}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black"
+            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
           >
+            <option value="">Select User</option>
             <option value="User1">User 1</option>
             <option value="User2">User 2</option>
             <option value="User3">User 3</option>
@@ -73,29 +75,29 @@ export default function ClientProjectModal({
             placeholder="Project Description"
             value={formData.Description}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black min-h-20 h-20 resize-none"
+            className="w-full border p-2 rounded bg-gray-trans text-black min-h-20 h-20 resize-none font-source"
             rows={4}
             maxLength={1000}
           />
 
-          <span className="text-sm font-medium text-dark">Project type</span>
           <select
             name="ProjectType"
             value={formData.ProjectType}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black"
+            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
           >
+            <option value="">Choose a Project Type</option>
             <option value="webDevelopment">Web Development</option>
             <option value="Branding">Branding</option>
           </select>
 
-          <span className="text-sm font-medium text-dark">Choose User Project</span>
           <select
             name="Project"
             value={formData.Project}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black"
+            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
           >
+            <option value="">Select a Project</option>
             <option value="Project1">Project 1</option>
             <option value="Project2">Project 2</option>
             <option value="Project3">Project 3</option>
@@ -107,7 +109,7 @@ export default function ClientProjectModal({
             name="Link"
             value={formData.Link}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black"
+            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
           />
 
           <span className="text-sm font-medium text-dark">Image</span>
@@ -115,7 +117,7 @@ export default function ClientProjectModal({
             type="file"
             name="Image"
             onChange={handleFileChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black"
+            className="w-full border p-2 rounded bg-gray-trans text-black font-source"
             accept=".pdf,.doc,.docx,.jpg,.png,.zip"
           />
 
