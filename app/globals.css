@@ -10,13 +10,13 @@
   --color-accent: #f8b678;
   --color-dark: #012d57;
   --color-dark-accent: #174066;
-  --color-gray: #536169;
   --color-gray-trans: rgba(164, 164, 164, 0.4);
+  --color-off-black: #202020;
 }
 
 @layer components {
   .buttonPrimary {
-    @apply bg-secondary text-white font-source flex items-center justify-around rounded-lg hover:bg-dark transition-transform duration-150 active:scale-95;
+    @apply bg-secondary text-black font-source flex items-center justify-around rounded-lg hover:bg-dark transition-transform duration-150 active:scale-95;
   }
 
   .buttonSecondary {
@@ -26,6 +26,9 @@
   .button {
         @apply font-bold font-source flex items-center justify-around rounded-lg border-1 transition-transform duration-150 active:scale-95;
 
+  }
+  .stats {
+    @apply flex flex-col items-center bg-off-black rounded-xl p-1
   }
 
 }

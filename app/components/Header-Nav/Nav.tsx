@@ -3,6 +3,7 @@
 import { Primary } from "../Buttons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const adminMenuItems: { label: string; link: string; isDisabled: boolean }[] = [
   { label: "Dashboard", link: "/admin", isDisabled: false },
@@ -19,8 +20,24 @@ export default function Nav({ onClickAction }: { onClickAction?: () => void }) {
   const pathname = usePathname();
   return (
     <>
+      <div className="pl-15 pt-5 md:pl-20">
+        <a
+          href="https://macstudionexus.com"
+          target="_blank"
+          rel="noopener"
+          className="self-start"
+        >
+          <Image
+            src="/temp-logo.svg"
+            alt="Logo"
+            width={100}
+            height={100}
+            className="size-12 sm:size-16 md:size-24"
+          />
+        </a>
+      </div>
       <nav className="p-4 sm:pt-8 font-jetbrains">
-        <ul className="space-y-4 sm:space-y-8 text-lg sm:text-2xl pl-1">
+        <ul className="space-y-4 sm:space-y-8 text-lg sm:text-2xl md:text-3xl pl-1">
           {adminMenuItems.map((item) => (
             <li key={item.label}>
               {item.isDisabled ? (
