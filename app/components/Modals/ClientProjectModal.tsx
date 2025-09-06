@@ -97,6 +97,7 @@ export default function ClientProjectModal({
             type="date"
             name="StartDate"
             placeholder="Start Date"
+            required
             value={formData.StartDate}
             onChange={handleChange}
             className="w-full border p-2 rounded bg-gray-trans text-black font-source"

@@ -82,6 +82,7 @@ export default function ClientProjectModal({
 
           <select
             name="ProjectType"
+            required
             value={formData.ProjectType}
             onChange={handleChange}
             className="w-full border p-2 rounded bg-gray-trans text-black font-source"
@@ -93,6 +94,7 @@ export default function ClientProjectModal({
 
           <select
             name="Project"
+            required
             value={formData.Project}
             onChange={handleChange}
             className="w-full border p-2 rounded bg-gray-trans text-black font-source"
@@ -103,7 +105,7 @@ export default function ClientProjectModal({
             <option value="Project3">Project 3</option>
           </select>
 
-          <span className="text-sm font-medium text-dark">Website Link</span>
+          <span className="text-sm font-medium text-dark">Website Link<span className="text-xs text-black"> *if applicable*</span></span>
           <input
             type="text"
             name="Link"
@@ -115,6 +117,7 @@ export default function ClientProjectModal({
           <span className="text-sm font-medium text-dark">Image</span>
           <input
             type="file"
+            required
             name="Image"
             onChange={handleFileChange}
             className="w-full border p-2 rounded bg-gray-trans text-black font-source"

@@ -4,6 +4,7 @@ import { useState } from "react";
 import ClientProjectModal from "@/app/components/Modals/ClientProjectModal";
 import PortfolioModal from "@/app/components/Modals/PortfolioModal";
 import UserModal from "@/app/components/Modals/UserModal";
+import BlogPostModal from "@/app/components/Modals/BlogModal";
 
 export default function QuickActions() {
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -44,6 +45,9 @@ export default function QuickActions() {
         <PortfolioModal onCloseAction={closeModal} />
       )}
       {activeModal === "user" && <UserModal onCloseAction={closeModal} />}
+      {activeModal === "blogPost" && (
+        <BlogPostModal onCloseAction={closeModal} />
+      )}
     </>
   );
 }
