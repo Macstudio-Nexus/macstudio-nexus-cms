@@ -10,7 +10,7 @@
   --color-accent: #f8b678;
   --color-dark: #012d57;
   --color-dark-accent: #174066;
-  --color-gray: #a4a4a4;
+  --color-gray: #536169;
   --color-gray-trans: rgba(164, 164, 164, 0.4);
 }
 
@@ -21,6 +21,11 @@
 
   .buttonSecondary {
     @apply bg-transparent text-dark font-bold font-source flex items-center justify-around rounded-lg hover:bg-dark hover:text-white border-1 border-dark transition-transform duration-150 active:scale-95;
+  }
+
+  .button {
+        @apply font-bold font-source flex items-center justify-around rounded-lg border-1 transition-transform duration-150 active:scale-95;
+
   }
 
 }
