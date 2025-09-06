@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import { Primary, Secondary } from "@/app/components/Buttons";
 import Header from "@/app/components/Header-Nav/Header";
 
@@ -8,16 +8,14 @@ export const metadata: Metadata = {
   description: "Official web app for Macstudio Nexus Content Management System",
 };
 
-export default function RootLayout({
+export default function UserLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        {children}
-      </body>
-    </html>
+    <>
+      {children}
+    </>
   );
 }
