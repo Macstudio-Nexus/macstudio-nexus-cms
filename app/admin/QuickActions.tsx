@@ -2,6 +2,7 @@
 import { Primary } from "@/app/components/Buttons";
 import { useState } from "react";
 import ClientProjectModal from "@/app/components/Modals/ClientProjectModal";
+import PortfolioModal from "@/app/components/Modals/PortfolioModal";
 
 export default function QuickActions() {
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -37,6 +38,9 @@ export default function QuickActions() {
 
       {activeModal === "clientProject" && (
         <ClientProjectModal onCloseAction={closeModal} />
+      )}
+      {activeModal === "portfolio" && (
+        <PortfolioModal onCloseAction={closeModal} />
       )}
     </>
   );

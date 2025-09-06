@@ -8,12 +8,12 @@ export default function ClientProjectModal({
   onCloseAction: () => void;
 }) {
   const [formData, setFormData] = useState({
+    Title: "",
     User: "",
-    ProjectName: "",
     ProjectType: "",
     Description: "",
-    StartDate: "",
-    EndDate: "",
+    Link: "",
+    Project: "",
     Attachments: [] as File[],
   });
 
@@ -39,16 +39,19 @@ export default function ClientProjectModal({
   return (
     <div className="z-50 fixed bottom-1 bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] w-7/8 shadow-lg">
       <div className="flex flex-col items-center">
-        <h2 className="text-2xl font-jetbrains font-bold text-dark">
-          New Client Project
+        <h2 className="text-2xl font-jetbrains font-bold text-center text-dark">
+          New Macstudio Portfolio Post
         </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-1 p-6 overflow-y-auto max-h-140">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-1 px-6 pt-2 overflow-y-auto max-h-140"
+        >
           <input
             type="text"
-            name="ProjectName"
-            placeholder="Project Name"
-            value={formData.ProjectName}
+            name="Title"
+            placeholder="Title"
+            value={formData.Title}
             onChange={handleChange}
             className="w-full border p-2 rounded bg-gray-trans text-black"
           />
@@ -86,30 +89,31 @@ export default function ClientProjectModal({
             <option value="Branding">Branding</option>
           </select>
 
-          <span className="text-sm font-medium text-dark">Start Date</span>
+          <span className="text-sm font-medium text-dark">Choose User Project</span>
+          <select
+            name="Project"
+            value={formData.Project}
+            onChange={handleChange}
+            className="w-full border p-2 rounded bg-gray-trans text-black"
+          >
+            <option value="Project1">Project 1</option>
+            <option value="Project2">Project 2</option>
+            <option value="Project3">Project 3</option>
+          </select>
+
+          <span className="text-sm font-medium text-dark">Website Link</span>
           <input
-            type="date"
-            name="StartDate"
-            placeholder="Start Date"
-            value={formData.StartDate}
+            type="text"
+            name="Link"
+            value={formData.Link}
             onChange={handleChange}
             className="w-full border p-2 rounded bg-gray-trans text-black"
           />
 
-          <span className="text-sm font-medium text-dark">Due Date</span>
-          <input
-            type="date"
-            name="EndDate"
-            value={formData.EndDate}
-            onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-trans text-black"
-          />
-
-          <span className="text-sm font-medium text-dark">Attachments</span>
+          <span className="text-sm font-medium text-dark">Image</span>
           <input
             type="file"
-            name="Attachments"
-            multiple
+            name="Image"
             onChange={handleFileChange}
             className="w-full border p-2 rounded bg-gray-trans text-black"
             accept=".pdf,.doc,.docx,.jpg,.png,.zip"
@@ -120,8 +124,9 @@ export default function ClientProjectModal({
               type="submit"
               className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
             >
-              Add Project
+              Add Portfolio
             </button>
+
             <button
               className="button py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark"
               onClick={onCloseAction}
@@ -130,7 +135,6 @@ export default function ClientProjectModal({
             </button>
           </div>
         </form>
-
       </div>
     </div>
   );
