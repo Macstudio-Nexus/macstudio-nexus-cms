@@ -29,8 +29,8 @@ export default function QuickActions() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 bg-black text-white gap-3 rounded-lg h-auto max-w-sm my-5 mx-14 shadow-md shadow-black font-jetbrains">
-        <h2 className="text-xl sm:text-3xl pb-3">Quick Actions</h2>
+      <div className="flex flex-col items-center justify-center gap-3 h-auto max-w-sm dashboard-card-container">
+        <h2 className="text-xl sm:text-3xl pb-3 text-center">Quick Actions</h2>
         {QuickButtons.map((button) => (
           <div key={button.label}>
             <Primary label={button.label} handleClick={button.action} />

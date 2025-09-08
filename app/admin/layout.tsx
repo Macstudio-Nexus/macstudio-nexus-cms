@@ -21,7 +21,7 @@ export default function AdminLayout({
       </nav>
       <div className="flex-1 flex flex-col">
         <header className="sticky top-0 z-50 bg-primary">
-          <Header title="Admin" button1={<Primary label="Log Out" />} />
+          <Header title="Admin" button1={<Secondary label="Log Out" />} />
         </header>
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>

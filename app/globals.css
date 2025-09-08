@@ -11,15 +11,18 @@
   --color-dark: #012d57;
   --color-dark-accent: #174066;
   --color-gray-trans: rgba(164, 164, 164, 0.4);
-  --color-off-black: #202020;
+  --color-off-black: #11141b;
 }
 
 @layer components {
-  .buttonPrimary {
-    @apply bg-secondary text-black font-source flex items-center justify-around rounded-lg hover:bg-dark transition-transform duration-150 active:scale-95;
+  .button {
+    @apply text-lg sm:text-xl md:text-2xl font-source rounded-lg transition-all duration-200 active:scale-95 cursor-pointer border-1;
   }
-  .buttonSecondary {
-    @apply bg-transparent text-dark font-bold font-source flex items-center justify-around rounded-lg hover:bg-dark hover:text-white border-1 border-dark transition-transform duration-150 active:scale-95;
+  .button-primary {
+    @apply bg-secondary text-black py-1 px-4 lg:py-2 lg:px-5 hover:text-white hover:bg-dark border-transparent hover:border-white;
+  }
+  .button-secondary {
+    @apply bg-transparent text-white py-2 px-5 hover:bg-primary hover:text-dark hover:border-dark;
   }
   .stats {
     @apply flex flex-col items-center bg-off-black rounded-xl p-1;
@@ -28,12 +31,15 @@
     @apply w-full border p-2 sm:p-4 rounded bg-gray-trans text-black font-source;
   }
   .formButton {
-    @apply py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark rounded-xl font-source sm:text-xl;
+    @apply py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark rounded-xl font-source sm:text-xl cursor-pointer transition-colors duration-200;
   }
   .file-input {
-    @apply file:mr-4 file:py-1 file:px-4 file:rounded file:border-0 file:bg-secondary file:text-black file:font-source hover:file:bg-primary file:cursor-pointer
+    @apply file:mr-4 file:py-1 file:px-4 file:rounded file:border-0 file:bg-secondary file:text-black file:font-source hover:file:bg-primary file:cursor-pointer;
   }
   .modal-container {
     @apply z-50 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-l from-primary to-secondary border-2 rounded flex items-center justify-center h-fit w-fit min-w-7/8 sm:min-w-5/8 md:min-w-1/2 xl:min-w-1/3 shadow-lg p-4 md:p-6;
+  }
+  .dashboard-card-container{
+    @apply bg-off-black text-white rounded-lg shadow-md shadow-black font-jetbrains p-4 sm:p-6 md:p-8 m-3;
   }
 }
