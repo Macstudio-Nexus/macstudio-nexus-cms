@@ -42,4 +42,10 @@
   .dashboard-card-container{
     @apply bg-off-black text-white rounded-lg shadow-md shadow-black font-jetbrains p-4 sm:p-6 md:p-8 m-3;
   }
+  .dashboard-container-header {
+    @apply text-xl sm:text-3xl pb-3 text-center;
+  }
+  .notification-item{
+    @apply text-accent text-sm sm:text-lg md:text-xl lg:text-xl py-1 text-left;
+  }
 }

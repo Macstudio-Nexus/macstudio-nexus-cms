@@ -1,7 +1,7 @@
 export default function QuickStats() {
   return (
     <div className="dashboard-card-container max-w-3/4">
-      <h2 className="text-2xl lg:text-3xl text-center mb-4">Macstudio Quick Statistics</h2>
+      <h2 className="dashboard-container-header">Macstudio Quick Statistics</h2>
       <div className="flex flex-col sm:flex-row justify-center items-center">
         <div className="flex flex-col xl:flex-row justify-center items-center gap-6 flex-1 mb-4 sm:mb-0">
           <div className="text-center">

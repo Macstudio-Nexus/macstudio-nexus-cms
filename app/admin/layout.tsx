@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { Primary, Secondary } from "@/app/components/Buttons";
 import Header from "@/app/components/Header-Nav/Header";
-import Nav from "@/app/components/Header-Nav/Nav";
+import AdminNav from "@/app/components/Header-Nav/AdminNav";
 
 export const metadata: Metadata = {
-  title: "Macstudio Nexus CMS",
+  title: "Macstudio Nexus CMS Admin",
   description: "Official web app for Macstudio Nexus Content Management System",
 };
 
@@ -17,7 +17,7 @@ export default function AdminLayout({
   return (
     <div className="flex h-screen">
       <nav className=" hidden sm:block sticky top-0 h-screen w-55 md:w-70 bg-dark overflow-y-auto">
-        <Nav />
+        <AdminNav />
       </nav>
       <div className="flex-1 flex flex-col">
         <header className="sticky top-0 z-50 bg-primary">
