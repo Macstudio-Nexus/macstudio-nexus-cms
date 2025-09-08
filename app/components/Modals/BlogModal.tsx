@@ -36,7 +36,7 @@ export default function BlogModal({
   }
 
   return (
-    <div className="z-50 fixed bottom-1 sm:right-[5vh] sm:bottom-[15vh] bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] sm:h-[75vh] w-7/8 shadow-lg">
+    <div className="modal-container">
       <div className="flex flex-col items-center">
         <h2 className="text-2xl sm:text-4xl font-jetbrains font-bold text-dark">
           Create New Blog Post
@@ -82,7 +82,7 @@ export default function BlogModal({
             type="file"
             name="Image"
             onChange={handleFileChange}
-            className="inputfield"
+            className="inputfield file-input"
             accept=".jpg,.png,.webp,.jpeg"
           />
 
@@ -96,7 +96,6 @@ export default function BlogModal({
             required
           />
 
-          <span className="text-sm font-medium text-dark">Category</span>
           <select
             name="Category"
             required
@@ -114,7 +113,7 @@ export default function BlogModal({
               type="submit"
               className="formButton"
             >
-              Create Blog Post
+              Add Post
             </button>
 
             <button

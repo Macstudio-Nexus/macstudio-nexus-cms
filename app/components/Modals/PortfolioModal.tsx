@@ -37,7 +37,7 @@ export default function ClientProjectModal({
   };
 
   return (
-    <div className="z-50 fixed bottom-1 sm:right-[5vh] sm:bottom-[15vh] bg-gradient-to-l from-primary to-secondary bg-opacity-50 border-2 rounded flex items-center justify-center h-[95vh] sm:h-[75vh] w-7/8 shadow-lg">
+    <div className="modal-container">
       <div className="flex flex-col items-center">
         <h2 className="text-2xl sm:text-3xl sm:pb-4 font-jetbrains font-bold text-center text-dark">
           New Macstudio Portfolio Post
@@ -120,7 +120,7 @@ export default function ClientProjectModal({
             required
             name="Image"
             onChange={handleFileChange}
-            className="inputfield"
+            className="inputfield file-input"
             accept=".pdf,.doc,.docx,.jpg,.png,.zip"
           />
 

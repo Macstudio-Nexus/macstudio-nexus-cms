@@ -39,7 +39,7 @@ export default function Login() {
         <a href="#" className="text-sm text-gray-400 pl-1 hover:underline">
           Forgot Password?
         </a>
-        <button type="submit" className="mt-5  p-2 rounded-lg bg-secondary text-black border border-transparent hover:bg-dark hover:text-white hover:border-accent transition-colors duration-300">
+        <button type="submit" className="mt-5  p-2 rounded-lg bg-secondary text-black border border-transparent hover:bg-dark hover:text-white hover:border-accent transition-colors duration-300 cursor-pointer">
           Log In
         </button>
       </form>
