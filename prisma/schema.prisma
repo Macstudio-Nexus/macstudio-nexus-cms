@@ -19,16 +19,20 @@ model Users {
   name          String
   email         String       @unique
   password      String
-  phone_number  String?
-  company_name  String?
-  business_type String?
-  createdAt     DateTime  @default(now())
-  role_id       Int
-  role          Roles        @relation(fields: [role_id], references: [id])
+  phoneNumber   String?
+  companyName   String?
+  businessType  String?
+  createdAt     DateTime     @default(now())
+
+  roleId        Int
+  role          Roles        @relation(fields: [roleId], references: [id])
 
   sites         Sites[]      // 1 user → many sites
   projects      Projects[]   // 1 user → many projects
   posts         BlogPosts[]  // 1 user → many blog posts
+  comments      Comments[]
+  ActionItems   ActionItems[]
+  notifications Notifications[]
 }
 
 model Roles {
@@ -66,6 +70,8 @@ model Projects {
 
   siteId    Int
   site      Sites     @relation(fields: [siteId], references: [id])
+
+  comments  Comments[]
 }
 
 model BlogPosts {
@@ -86,3 +92,54 @@ model BlogPosts {
   siteId    Int
   site      Sites     @relation(fields: [siteId], references: [id])
 }
+
+model Comments {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  user        Users     @relation(fields: [userId], references: [id])
+  projectId   Int?      
+  project     Projects?  @relation(fields: [projectId], references: [id])
+  content     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+
+model Notifications {
+  id         Int              @id @default(autoincrement())
+  userId     Int
+  user       Users            @relation(fields: [userId], references: [id])
+  title      String
+  message    String
+  type       NotificationType @default(INFO)
+  read       Boolean          @default(false)
+  createdAt  DateTime         @default(now())
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  SUCCESS
+  ERROR
+}
+
+
+model ActionItems {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  userId      Int
+  user        Users     @relation(fields: [userId], references: [id])
+  status      Status    @default(PENDING)
+  priority    Int?
+  dueDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum Status {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+

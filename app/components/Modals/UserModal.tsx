@@ -10,10 +10,10 @@ export default function UserModal({
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    company_name: "",
-    phone_number: "",
-    business_type: "",
     password: "",
+    companyName: "",
+    phoneNumber: "",
+    businessType: "",
     role: "",
   });
 
@@ -40,9 +40,9 @@ export default function UserModal({
       name: formDataObj.name,
       email: formDataObj.email,
       password: formDataObj.password,
-      phone_number: formDataObj.phone_number || null,
-      company_name: formDataObj.company_name || null,
-      business_type: formDataObj.business_type || null,
+      phoneNumber: formDataObj.phoneNumber || null,
+      companyName: formDataObj.companyName || null,
+      businessType: formDataObj.businessType || null,
       role_id:
         formDataObj.role === "admin" ? 1 : formDataObj.role === "guest" ? 3 : 2, // default to "user"
     };
@@ -63,9 +63,9 @@ export default function UserModal({
       setFormData({
         name: "",
         email: "",
-        company_name: "",
-        phone_number: "",
-        business_type: "",
+        companyName: "",
+        phoneNumber: "",
+        businessType: "",
         password: "",
         role: "",
       });
@@ -97,9 +97,9 @@ export default function UserModal({
 
           <input
             type="tel"
-            name="phone_number"
+            name="phoneNumber"
             placeholder="Phone Number"
-            value={formData.phone_number}
+            value={formData.phoneNumber}
             onChange={handleChange}
             className="inputfield"
           />
@@ -126,18 +126,18 @@ export default function UserModal({
 
           <input
             type="text"
-            name="company_name"
+            name="companyName "
             placeholder="Business Name"
-            value={formData.company_name}
+            value={formData.companyName}
             onChange={handleChange}
             className="inputfield"
           />
 
           <input
             type="text"
-            name="business_type"
+            name="businessType"
             placeholder="Business Service Type"
-            value={formData.business_type}
+            value={formData.businessType}
             onChange={handleChange}
             className="inputfield"
             maxLength={1000}
