@@ -12,7 +12,7 @@ interface HeaderProps {
   button2?: React.ReactNode;
 }
 
-export default function Header({ button1, button2 }: HeaderProps) {
+export default function Header({ button1 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 

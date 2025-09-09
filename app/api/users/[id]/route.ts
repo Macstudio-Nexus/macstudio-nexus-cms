@@ -14,16 +14,13 @@ export async function GET() {
   }
 }
 
-export async function DELETE(req: NextRequest) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { searchParams } = new URL(req.url);
-    const idParam = searchParams.get("id");
+    const id = parseInt((await params).id, 10);
 
-    if (!idParam) {
-      return NextResponse.json({ error: "Missing user id" }, { status: 400 });
+    if (isNaN(id)) {
+      return NextResponse.json({ error: "Invalid user id" }, { status: 400 });
     }
-
-    const id = parseInt(idParam, 10);
 
     const deletedUser = await prisma.users.delete({
       where: { id },

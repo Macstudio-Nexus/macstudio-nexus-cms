@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Primary, Secondary } from "@/app/components/Buttons";
-import Header from "@/app/components/Header-Nav/Header";
 
 export const metadata: Metadata = {
   title: "Macstudio Nexus CMS",

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import { Primary, Secondary } from "@/app/components/Buttons";
+import { Secondary } from "@/app/components/Buttons";
 import Header from "@/app/components/Header-Nav/Header";
 import UserNav from "@/app/components/Header-Nav/UserNav";
 
