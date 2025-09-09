@@ -15,7 +15,7 @@ interface User {
   roleId: number;
 }
 
-export default function users() {
+export default function Users() {
   const [users, setUsers] = useState<User[]>([]);
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [selectedUserName, setSelectedUserName] = useState<string | null>(null);
