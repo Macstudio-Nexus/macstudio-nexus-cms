@@ -8,7 +8,7 @@ import Image from "next/image";
 const userMenuItems: { label: string; link: string; isDisabled: boolean }[] = [
   { label: "Dashboard", link: "/user", isDisabled: false },
   { label: "Your Projects", link: "/user/client-projects", isDisabled: false },
-  { label: "Blog", link: "/user/blog", isDisabled: false },
+  { label: "Blog Posts", link: "/user/blog", isDisabled: false },
   { label: "Media", link: "/user/media", isDisabled: false },
   { label: "Support", link: "/user/support", isDisabled: false },
   { label: "Settings", link: "/user/settings", isDisabled: true }

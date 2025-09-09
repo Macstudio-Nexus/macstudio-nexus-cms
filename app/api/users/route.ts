@@ -7,22 +7,22 @@ interface AddUserBody {
   name: string;
   email: string;
   password: string;
-  phone_number?: string;
-  company_name?: string;
-  business_type?: string;
-  role_id: number;
+  phoneNumber?: string;
+  companyName?: string;
+  businessType?: string;
+  roleId: number;
 }
 
 export async function POST(req: NextRequest) {
   try {
     // Parse JSON body
     const body: AddUserBody = await req.json();
-    const { name, email, password, phone_number, company_name, business_type, role_id } = body;
+    const { name, email, password, phoneNumber, companyName, businessType, roleId } = body;
 
     // Validate required fields
-    if (!name || !email || !password || !role_id) {
+    if (!name || !email || !password || !roleId) {
       return NextResponse.json(
-        { error: "Missing required fields: name, email, password, role_id" },
+        { error: "Missing required fields: name, email, password, roleId" },
         { status: 400 }
       );
     }
@@ -36,10 +36,10 @@ export async function POST(req: NextRequest) {
         name,
         email,
         password: hashedPassword,
-        phone_number,
-        company_name,
-        business_type,
-        role_id,
+        phoneNumber,
+        companyName,
+        businessType,
+        roleId,
       },
     });
 

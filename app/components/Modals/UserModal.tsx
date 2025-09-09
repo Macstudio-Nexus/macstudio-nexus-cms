@@ -25,19 +25,6 @@ export default function UserModal({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  function getRoleId(role: string) {
-    switch (role.toLowerCase()) {
-      case "admin":
-        return 1;
-      case "user":
-        return 2;
-      case "guest":
-        return 3;
-      default:
-        return 2; // default to user
-    }
-  }
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
