@@ -1,9 +1,9 @@
 "use client";
 import { Primary } from "@/app/components/Buttons";
 import { useState } from "react";
-import ClientProjectModal from "@/app/components/Modals/ClientProjectModal";
+import ClientProjectModal from "@/app/components/Modals/AddClientProject";
 import PortfolioModal from "@/app/components/Modals/PortfolioModal";
-import UserModal from "@/app/components/Modals/UserModal";
+import UserModal from "@/app/components/Modals/AddUserModal";
 import BlogPostModal from "@/app/components/Modals/BlogModal";
 
 export default function QuickActions() {
@@ -41,9 +41,7 @@ export default function QuickActions() {
       {activeModal === "clientProject" && (
         <ClientProjectModal onCloseAction={closeModal} />
       )}
-      {activeModal === "user" && (
-        <UserModal onCloseAction={closeModal} />
-      )}
+      {activeModal === "user" && <UserModal onCloseAction={closeModal} />}
       {activeModal === "portfolio" && (
         <PortfolioModal onCloseAction={closeModal} />
       )}

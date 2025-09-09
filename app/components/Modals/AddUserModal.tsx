@@ -14,7 +14,7 @@ export default function UserModal({
     companyName: "",
     phoneNumber: "",
     businessType: "",
-    role: "",
+    roleId: "",
   });
 
   function handleChange(
@@ -43,8 +43,8 @@ export default function UserModal({
       phoneNumber: formDataObj.phoneNumber || null,
       companyName: formDataObj.companyName || null,
       businessType: formDataObj.businessType || null,
-      role_id:
-        formDataObj.role === "admin" ? 1 : formDataObj.role === "guest" ? 3 : 2, // default to "user"
+      roleId:
+        formDataObj.roleId === "Admin" ? 1 : formDataObj.roleId === "Guest" ? 3 : 2, // default to "user"
     };
 
     try {
@@ -67,7 +67,7 @@ export default function UserModal({
         phoneNumber: "",
         businessType: "",
         password: "",
-        role: "",
+        roleId: "",
       });
 
       onCloseAction(); // close modal after success
@@ -126,7 +126,7 @@ export default function UserModal({
 
           <input
             type="text"
-            name="companyName "
+            name="companyName"
             placeholder="Business Name"
             value={formData.companyName}
             onChange={handleChange}
@@ -145,9 +145,9 @@ export default function UserModal({
 
           <span className="text-sm font-medium text-dark">Role</span>
           <select
-            name="role"
+            name="roleId"
             required
-            value={formData.role}
+            value={formData.roleId}
             onChange={handleChange}
             className="inputfield"
           >

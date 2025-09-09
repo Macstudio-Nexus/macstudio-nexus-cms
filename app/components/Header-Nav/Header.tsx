@@ -16,7 +16,7 @@ export default function Header({ button1, button2 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const isAdminPage = pathname === "/admin";
+  const isAdminPage = pathname.startsWith("/admin");
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -25,7 +25,7 @@ export default function Header({ button1, button2 }: HeaderProps) {
   return (
     <>
       <header>
-        <div className="flex justify-between items-center bg-dark h-auto py-4 shadow-md">
+        <div className="flex justify-between items-center bg-dark h-auto py-4 shadow-md sticky top-0 z-40">
           <div className="flex sm:hidden">
             <button onClick={toggleMenu} className="pl-4">
               {isMenuOpen ? (
@@ -54,7 +54,7 @@ export default function Header({ button1, button2 }: HeaderProps) {
         </div>
       </header>
       {isMenuOpen && (
-        <div className="sm:hidden bg-dark shadow-lg w-1/2 h-full fixed top-18 left-0 z-50">
+        <div className="sm:hidden bg-dark shadow-lg w-[14rem] h-full fixed top-18 left-0 z-50">
           {isAdminPage ? <AdminNav onClickAction={toggleMenu} /> : <UserNav onClickAction={toggleMenu} />}
         </div>
       )}

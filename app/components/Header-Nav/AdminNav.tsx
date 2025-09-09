@@ -37,7 +37,7 @@ export default function Nav({ onClickAction }: { onClickAction?: () => void }) {
         </a>
       </div>
       <nav className="p-4 sm:pt-8 font-jetbrains">
-        <ul className="space-y-4 sm:space-y-8 text-lg sm:text-2xl md:text-3xl pl-1">
+        <ul className="space-y-4 sm:space-y-8 text-2xl sm:text-3xl pl-1">
           {adminMenuItems.map((item) => (
             <li key={item.label}>
               {item.isDisabled ? (
