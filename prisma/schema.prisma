@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id            Int          @id @default(autoincrement())
+  name          String
+  email         String       @unique
+  password      String
+  phone_number  String?
+  company_name  String?
+  business_type String?
+  createdAt     DateTime  @default(now())
+  role_id       Int
+  role          Roles        @relation(fields: [role_id], references: [id])
+
+  sites         Sites[]      // 1 user → many sites
+  projects      Projects[]   // 1 user → many projects
+  posts         BlogPosts[]  // 1 user → many blog posts
+}
+
+model Roles {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  users Users[]
+}
+
+model Sites {
+  id        Int         @id @default(autoincrement())
+  name      String
+  domain    String      @unique
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  userId    Int
+  user      Users       @relation(fields: [userId], references: [id])
+
+  projects  Projects[]  // 1 site → many projects
+  posts     BlogPosts[] // 1 site → many blog posts
+}
+
+model Projects {
+  id           Int       @id @default(autoincrement())
+  title        String
+  content      String?
+  domain       String?   @unique
+  description  String?
+  type         String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  userId    Int
+  user      Users     @relation(fields: [userId], references: [id])
+
+  siteId    Int
+  site      Sites     @relation(fields: [siteId], references: [id])
+}
+
+model BlogPosts {
+  id             Int       @id @default(autoincrement())
+  title          String
+  author         String
+  slug           String    @unique
+  content        String?
+  category       String
+  status         String
+  publishedDate  DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  userId    Int
+  user      Users     @relation(fields: [userId], references: [id])
+
+  siteId    Int
+  site      Sites     @relation(fields: [siteId], references: [id])
+}
