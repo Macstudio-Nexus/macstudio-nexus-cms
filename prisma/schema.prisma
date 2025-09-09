@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Roles {
+  id    Int    @id @default(autoincrement())
+  name  String
+
+  users Users[]
+}
+
+model Sites {
+  id       Int       @id @default(autoincrement())
+  name     String
+  domain   String
+
+  projects   Projects[]
+  blogPosts  BlogPosts[]
+}
+
+model Users {
+  id           Int       @id @default(autoincrement())
+  name         String
+  phone_number  String?
+  email        String    @unique
+  password     String
+  company_name  String?
+  business_type String?
+  created_at    DateTime  @default(now())
+  role_id       Int
+  role         Roles      @relation(fields: [role_id], references: [id])
+
+  projects   Projects[]
+  blogPosts  BlogPosts[]
+}
+
+model Projects {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  type        String
+  start_date   DateTime
+  due_date     DateTime?
+  attachments String?
+  url         String?
+  created_at   DateTime  @default(now())
+  
+  user_id      Int
+  user        Users      @relation(fields: [user_id], references: [id])
+
+  site_id      Int
+  site        Sites      @relation(fields: [site_id], references: [id])
+}
+
+model BlogPosts {
+  id           Int       @id @default(autoincrement())
+  site_id       Int
+  site         Sites      @relation(fields: [site_id], references: [id])
+  
+  user_id       Int
+  user         Users      @relation(fields: [user_id], references: [id])
+  
+  title        String
+  slug         String    @unique
+  author       String
+  content      String
+  image        String?
+  category     String?
+  status       String
+  published_at  DateTime?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+}

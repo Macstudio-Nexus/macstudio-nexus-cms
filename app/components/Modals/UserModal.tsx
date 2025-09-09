@@ -8,13 +8,13 @@ export default function UserModal({
   onCloseAction: () => void;
 }) {
   const [formData, setFormData] = useState({
-    Name: "",
-    Email: "",
-    BusinessName: "",
-    PhoneNumber: "",
-    Service: "",
-    Password: "",
-    Role: "",
+    name: "",
+    email: "",
+    company_name: "",
+    phone_number: "",
+    business_type: "",
+    password: "",
+    role: "",
   });
 
   function handleChange(
@@ -25,10 +25,66 @@ export default function UserModal({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function getRoleId(role: string) {
+    switch (role.toLowerCase()) {
+      case "admin":
+        return 1;
+      case "user":
+        return 2;
+      case "guest":
+        return 3;
+      default:
+        return 2; // default to user
+    }
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    // Here you would typically handle form submission, e.g., send data to a server
+
+    const formDataObj = Object.fromEntries(
+      Array.from(new FormData(e.currentTarget)).map(([k, v]) => [
+        k,
+        v.toString(),
+      ])
+    );
+
+    // Map front-end keys to DB columns
+    const data = {
+      name: formDataObj.name,
+      email: formDataObj.email,
+      password: formDataObj.password,
+      phone_number: formDataObj.phone_number || null,
+      company_name: formDataObj.company_name || null,
+      business_type: formDataObj.business_type || null,
+      role_id:
+        formDataObj.role === "admin" ? 1 : formDataObj.role === "guest" ? 3 : 2, // default to "user"
+    };
+
+    try {
+      const res = await fetch("/api/users/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      console.log("User added:", result);
+    } catch (error) {
+      console.error("Error adding user:", error);
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        company_name: "",
+        phone_number: "",
+        business_type: "",
+        password: "",
+        role: "",
+      });
+
+      onCloseAction(); // close modal after success
+    }
   }
 
   return (
@@ -44,9 +100,9 @@ export default function UserModal({
         >
           <input
             type="text"
-            name="Name"
+            name="name"
             placeholder="Main Contact Name"
-            value={formData.Name}
+            value={formData.name}
             onChange={handleChange}
             className="inputfield"
             required
@@ -54,28 +110,28 @@ export default function UserModal({
 
           <input
             type="tel"
-            name="PhoneNumber"
+            name="phone_number"
             placeholder="Phone Number"
-            value={formData.PhoneNumber}
+            value={formData.phone_number}
             onChange={handleChange}
             className="inputfield"
           />
 
           <input
             type="email"
-            name="Email"
+            name="email"
             placeholder="Email Address"
-            value={formData.Email}
+            value={formData.email}
             onChange={handleChange}
-            className="inputfield "
+            className="inputfield"
             required
           />
 
           <input
             type="password"
-            name="Password"
+            name="password"
             placeholder="Temporary Password"
-            value={formData.Password}
+            value={formData.password}
             onChange={handleChange}
             className="inputfield"
             required
@@ -83,28 +139,28 @@ export default function UserModal({
 
           <input
             type="text"
-            name="BusinessName"
+            name="company_name"
             placeholder="Business Name"
-            value={formData.BusinessName}
+            value={formData.company_name}
             onChange={handleChange}
             className="inputfield"
           />
 
-          <textarea
-            name="Service"
+          <input
+            type="text"
+            name="business_type"
             placeholder="Business Service Type"
-            value={formData.Service}
+            value={formData.business_type}
             onChange={handleChange}
-            className="inputfield min-h-20 h-20 resize-none"
-            rows={4}
+            className="inputfield"
             maxLength={1000}
           />
 
           <span className="text-sm font-medium text-dark">Role</span>
           <select
-            name="Role"
+            name="role"
             required
-            value={formData.Role}
+            value={formData.role}
             onChange={handleChange}
             className="inputfield"
           >
@@ -119,20 +175,14 @@ export default function UserModal({
               Add User
             </button>
 
-            <button className="formButton" onClick={onCloseAction}>
+            <button
+              type="button"
+              className="formButton"
+              onClick={onCloseAction}
+            >
               Close
             </button>
           </div>
-
-          {/* for spacing */}
-          <input
-            type="file"
-            required
-            name="Image"
-            // onChange={handleFileChange}
-            className="bg-transparent text-transparent self-start"
-            accept=".pdf,.doc,.docx,.jpg,.png,.zip"
-          />
         </form>
       </div>
     </div>
