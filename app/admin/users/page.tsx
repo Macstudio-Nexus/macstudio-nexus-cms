@@ -45,63 +45,88 @@ export default function Users() {
   }, []);
 
   return (
-    <main className="bg-gradient-to-r from-white to-primary min-h-screen">
-      <h1 className="text-3xl md:text-5xl font-source font-bold pt-4 px-2 text-off-black text-center">
-        Users
-      </h1>
+    <main className="flex flex-col items-center bg-gradient-to-r from-white to-primary min-h-screen">
+      <h1 className="page-header">Users</h1>
       <div>
-        {/* Dropdown */}
-        <select
-          value={selectedUserName || ""}
-          key={selectedUserName}
-          onChange={(e) => setSelectedUserName(String(e.target.value) || null)}
-          className="rounded-xl px-4 py-2 mb-4 font-source text-accent bg-off-black ml-4 mt-4 shadow-xl"
-        >
-          <option value="">Select a user</option>
-          {users?.map((user) => (
-            <option key={user.name} value={user.name}>
-              {user.name}
-            </option>
-          ))}
-        </select>
+        <div className="flex flex-col xl:flex-row items-start justify-center gap-6 mb-6">
+          {/* Dropdown */}
+          <select
+            value={selectedUserName || ""}
+            key={selectedUserName}
+            onChange={(e) =>
+              setSelectedUserName(String(e.target.value) || null)
+            }
+            className="rounded-xl px-4 py-2 mb-4 font-source text-black bg-primary ml-4 mt-3 shadow-xl xl:text-4xl"
+          >
+            <option value="">Select a user</option>
+            {users?.map((user) => (
+              <option key={user.name} value={user.name} className="bg-white font-bold">
+                {user.name}
+              </option>
+            ))}
+          </select>
 
-        {/* Display selected user data */}
-        {selectedUser && (
-          <div className="dashboard-card-container space-y-3 max-w-fit mx-auto">
-            <h3 className="font-semibold text-lg">{selectedUser.name}</h3>
-            <p>
-              <strong>Email:</strong> {selectedUser.email}
-            </p>
-            <p>
-              <strong>Phone:</strong> {selectedUser.phoneNumber || "-"}
-            </p>
-            <p>
-              <strong>Company:</strong> {selectedUser.companyName || "-"}
-            </p>
-            <p>
-              <strong>Business Type:</strong> {selectedUser.businessType || "-"}
-            </p>
-            <p>
-              <strong>Role:</strong>{" "}
-              {selectedUser.roleId === 1
-                ? "Admin"
-                : selectedUser.roleId === 3
-                  ? "Guest"
-                  : "User"}
-            </p>
+          {/* Display selected user data */}
+          {selectedUser ? (
+            <div className="dashboard-card-container space-y-3 max-w-fit mx-auto min-w-[95vh] xl:text-4xl lg:min-w-xl">
+              <h3 className="font-semibold text-lg lg:text-4xl">
+                <span className="text-accent">{selectedUser.name}</span>
+              </h3>
+              <p>
+                <strong>Email:</strong> <span className="text-accent">{selectedUser.email}</span>
+              </p>
+              <p>
+                <strong>Phone:</strong> <span className="text-accent">{selectedUser.phoneNumber || "-"}</span>
+              </p>
+              <p>
+                <strong>Company:</strong> <span className="text-accent">{selectedUser.companyName || "-"}</span>
+              </p>
+              <p>
+                <strong>Business Type:</strong>{" "}
+                <span className="text-accent">{selectedUser.businessType || "-"}</span>
+              </p>
+              <p>
+                <strong>Role:</strong>{" "}
+                <span className="text-accent">
+                  {selectedUser.roleId === 1
+                    ? "Admin"
+                    : selectedUser.roleId === 3
+                      ? "Guest"
+                      : "User"}
+                </span>
+              </p>
+            </div>
+          ) : (
+            <div className="dashboard-card-container space-y-3 max-w-[95vh] mx-auto lg:min-w-xl xl:text-4xl">
+              <h3 className="font-semibold text-lg lg:text-4xl">-</h3>
+              <p>
+                <strong>Email:</strong> -
+              </p>
+              <p>
+                <strong>Phone:</strong> -
+              </p>
+              <p>
+                <strong>Company:</strong> -
+              </p>
+              <p>
+                <strong>Business Type:</strong> -
+              </p>
+              <p>
+                <strong>Role:</strong> -
+              </p>
+            </div>
+          )}
+          <div className="flex flex-col items-center justify-center gap-3 h-auto max-w-sm dashboard-card-container">
+            <h2 className="dashboard-container-header">Quick Actions</h2>
+            {QuickButtons.map((button) => (
+              <div key={button.label}>
+                <Primary label={button.label} handleClick={button.action} />
+              </div>
+            ))}
           </div>
-        )}
-      </div>
-      <div className="flex flex-col items-center justify-center gap-3 h-auto max-w-sm dashboard-card-container">
-        <h2 className="dashboard-container-header">Quick Actions</h2>
-        {QuickButtons.map((button) => (
-          <div key={button.label}>
-            <Primary label={button.label} handleClick={button.action} />
-          </div>
-        ))}
+        </div>
       </div>
 
-     
       {activeModal === "user" && <UserModal onCloseAction={closeModal} />}
     </main>
   );

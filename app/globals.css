@@ -30,7 +30,7 @@
   .inputfield {
     @apply w-full border p-2 sm:p-4 rounded bg-gray-trans text-black font-source;
   }
-  .formButton {
+  .form-button {
     @apply py-1 px-4 bg-dark text-white hover:bg-dark-accent border-dark rounded-xl font-source sm:text-xl cursor-pointer transition-colors duration-200;
   }
   .file-input {
@@ -40,12 +40,15 @@
     @apply z-50 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-l from-primary to-secondary border-2 rounded flex items-center justify-center h-fit w-fit min-w-7/8 sm:min-w-5/8 md:min-w-1/2 xl:min-w-1/3 shadow-lg p-4 md:p-6;
   }
   .dashboard-card-container{
-    @apply bg-off-black text-white rounded-lg shadow-md shadow-black font-jetbrains p-4 sm:p-6 md:p-8 m-3;
+    @apply bg-off-black text-white rounded-lg shadow-md shadow-black font-jetbrains p-4 sm:p-6 md:p-8 m-3 xl:text-4xl;
   }
   .dashboard-container-header {
     @apply text-xl sm:text-3xl pb-3 text-center;
   }
   .notification-item{
     @apply text-accent text-sm sm:text-lg md:text-xl lg:text-xl py-1 text-left;
+  }
+  .page-header {
+    @apply text-3xl md:text-5xl lg:text-8xl font-jetbrains font-bold py-4 px-2 text-off-black text-center w-full bg-gray-trans border-b;
   }
 }

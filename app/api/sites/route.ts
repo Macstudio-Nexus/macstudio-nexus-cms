@@ -57,3 +57,24 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
+
+// Get all sites
+export async function GET() {
+  try {
+    const sites = await prisma.sites.findMany({
+      include: {
+        user: {
+          select: {
+            name: true
+          }
+        }
+      },
+      orderBy: { id: "asc" }, // optional, orders by id
+    });
+
+    return NextResponse.json({ sites });
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+    return NextResponse.json({ error: "Could not fetch sites" }, { status: 500 });
+  }
+}

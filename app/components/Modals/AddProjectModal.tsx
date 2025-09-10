@@ -1,9 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-interface Users {
+interface User {
   name: string;
+  id: number;
+}
+
+interface Site {
+  name: string;
+  id: number;
 }
 
 export default function ClientProjectModal({
@@ -11,6 +17,11 @@ export default function ClientProjectModal({
 }: {
   onCloseAction: () => void;
 }) {
+  const [users, setUsers] = useState<User[]>([]);
+  const [sites, setSites] = useState<Site[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>("");
+  const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     user: "",
     title: "",
@@ -20,6 +31,31 @@ export default function ClientProjectModal({
     siteId:""
   });
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch("/api/users");
+        const data = await res.json();
+        setUsers(data.users);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    const fetchSites = async () => {
+      try {
+        const res = await fetch("/api/sites");
+        const data = await res.json();
+        setSites(data.sites);
+      } catch (error) {
+        console.error("Error fetching sites:", error);
+      }
+    };
+
+    fetchUsers();
+    fetchSites();
+  }, []);
+
   function handleChange(
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -28,20 +64,90 @@ export default function ClientProjectModal({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
-    // Here you would typically handle form submission, e.g., send data to a server
+    
+    // Map front-end keys to DB columns
+    const data = {
+      title: formData.title,
+      type: formData.type,
+      description: formData.description || null,
+      domain: formData.domain || null,
+      userId: parseInt(formData.user, 10),
+      siteId: formData.siteId ? parseInt(formData.siteId, 10) : null,
+    };
+
+    try {
+      setIsLoading(true);
+      setError(""); // Clear previous errors
+      
+      const res = await fetch("/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || `HTTP error! status: ${res.status}`);
+      }
+
+      const result = await res.json();
+      console.log("Project added:", result);
+      
+      // Show success popup
+      setShowSuccess(true);
+      
+      // Reset form on success
+      setFormData({
+        user: "",
+        title: "",
+        type: "",
+        description: "",
+        domain: "",
+        siteId:""
+      });
+
+      // Auto-hide after 3 seconds and close modal
+      setTimeout(() => {
+        setShowSuccess(false);
+        onCloseAction();
+      }, 3000);
+    } catch (error) {
+      console.error("Error adding project:", error);
+      setError(error instanceof Error ? error.message : "An unknown error occurred");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
-    <div className="modal-container">
+    <>
+      {showSuccess && (
+        <div className="fixed top-1/2 right-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+          ✅ Successfully added project!
+        </div>
+      )}
+      
+      <div className="modal-container">
       <div className="flex flex-col items-center">
         <h2 className="text-2xl sm:text-4xl sm:pb-4 font-jetbrains font-bold text-dark">
           Create New Project
         </h2>
 
-        <form
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
+
+        {isLoading ? (
+          <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">
+            Loading...
+          </div>
+        ) : (
+          <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-1 px-6 pt-2 overflow-y-auto max-h-140 sm:max-h-180"
         >
@@ -63,9 +169,11 @@ export default function ClientProjectModal({
             className="inputfield"
           >
             <option value="">Select User</option>
-            <option value="User1">User 1</option>
-            <option value="User2">User 2</option>
-            <option value="User3">User 3</option>
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
+            ))}
           </select>
 
           <textarea
@@ -108,27 +216,31 @@ export default function ClientProjectModal({
             className="inputfield"
           >
             <option value="">Select Site</option>
-            <option value="User1">Site 1</option>
-            <option value="User2">Site 2</option>
-            <option value="User3">Site 3</option>
+            {sites.map((site) => (
+              <option key={site.id} value={site.id}>
+                {site.name}
+              </option>
+            ))}
           </select>
 
           <div className="flex items-center justify-around pt-4">
             <button
               type="submit"
-              className="formButton mr-6"
+              className="form-button mr-6"
             >
               Add Project
             </button>
             <button
-              className="formButton"
+              className="form-button"
               onClick={onCloseAction}
             >
               Close
             </button>
           </div>
-        </form>
+          </form>
+        )}
       </div>
-    </div>
+      </div>
+    </>
   );
 }
