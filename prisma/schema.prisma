@@ -45,6 +45,7 @@ model Sites {
   id        Int         @id @default(autoincrement())
   name      String
   domain    String      @unique
+  description String
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
@@ -58,7 +59,6 @@ model Sites {
 model Projects {
   id           Int       @id @default(autoincrement())
   title        String
-  content      String?
   domain       String?   @unique
   description  String?
   type         String
@@ -68,8 +68,8 @@ model Projects {
   userId    Int
   user      Users     @relation(fields: [userId], references: [id])
 
-  siteId    Int
-  site      Sites     @relation(fields: [siteId], references: [id])
+  siteId    Int?
+  site      Sites?    @relation(fields: [siteId], references: [id])
 
   comments  Comments[]
 }

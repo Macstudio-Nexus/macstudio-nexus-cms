@@ -2,19 +2,22 @@
 
 import { useState } from "react";
 
+interface Users {
+  name: string;
+}
+
 export default function ClientProjectModal({
   onCloseAction,
 }: {
   onCloseAction: () => void;
 }) {
   const [formData, setFormData] = useState({
-    User: "",
-    ProjectName: "",
-    ProjectType: "",
-    Description: "",
-    StartDate: "",
-    EndDate: "",
-    Attachments: [] as File[],
+    user: "",
+    title: "",
+    type: "",
+    description: "",
+    domain: "",
+    siteId:""
   });
 
   function handleChange(
@@ -31,16 +34,11 @@ export default function ClientProjectModal({
     // Here you would typically handle form submission, e.g., send data to a server
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = Array.from(e.target.files || []);
-    setFormData({ ...formData, Attachments: selectedFiles });
-  };
-
   return (
     <div className="modal-container">
       <div className="flex flex-col items-center">
         <h2 className="text-2xl sm:text-4xl sm:pb-4 font-jetbrains font-bold text-dark">
-          New Client Project
+          Create New Project
         </h2>
 
         <form
@@ -49,18 +47,18 @@ export default function ClientProjectModal({
         >
           <input
             type="text"
-            name="ProjectName"
+            name="title"
             required
-            placeholder="Project Name"
-            value={formData.ProjectName}
+            placeholder="Project Title"
+            value={formData.title}
             onChange={handleChange}
             className="inputfield"
           />
 
           <select
-            name="User"
+            name="user"
             required
-            value={formData.User}
+            value={formData.user}
             onChange={handleChange}
             className="inputfield"
           >
@@ -71,9 +69,9 @@ export default function ClientProjectModal({
           </select>
 
           <textarea
-            name="Description"
+            name="description"
             placeholder="Project Description"
-            value={formData.Description}
+            value={formData.description}
             onChange={handleChange}
             className="inputfield min-h-20 h-20 resize-none"
             rows={4}
@@ -81,9 +79,9 @@ export default function ClientProjectModal({
           />
 
           <select
-            name="ProjectType"
+            name="type"
             required
-            value={formData.ProjectType}
+            value={formData.type}
             onChange={handleChange}
             className="inputfield"
           >
@@ -92,40 +90,33 @@ export default function ClientProjectModal({
             <option value="Branding">Branding</option>
           </select>
 
-          <span className="text-sm font-medium text-dark">Start Date</span>
           <input
-            type="date"
-            name="StartDate"
-            placeholder="Start Date"
+            type="text"
+            name="domain"
+            placeholder="Domain"
             required
-            value={formData.StartDate}
+            value={formData.domain}
             onChange={handleChange}
             className="inputfield"
           />
 
-          <span className="text-sm font-medium text-dark">Due Date</span>
-          <input
-            type="date"
-            name="EndDate"
-            value={formData.EndDate}
+          <select
+            name="siteId"
+            required
+            value={formData.siteId}
             onChange={handleChange}
             className="inputfield"
-          />
-
-          <span className="text-sm font-medium text-dark">Attachments</span>
-          <input
-            type="file"
-            name="Attachments"
-            multiple
-            onChange={handleFileChange}
-            className="inputfield file-input"
-            accept=".pdf,.doc,.docx,.jpg,.png,.zip"
-          />
+          >
+            <option value="">Select Site</option>
+            <option value="User1">Site 1</option>
+            <option value="User2">Site 2</option>
+            <option value="User3">Site 3</option>
+          </select>
 
           <div className="flex items-center justify-around pt-4">
             <button
               type="submit"
-              className="formButton"
+              className="formButton mr-6"
             >
               Add Project
             </button>

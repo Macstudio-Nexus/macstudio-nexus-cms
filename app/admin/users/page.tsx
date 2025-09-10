@@ -35,10 +35,10 @@ export default function Users() {
   ];
 
   // Get selected user data
-  const selectedUser = users.find((user) => user.name === selectedUserName);
+  const selectedUser = users?.find((user) => user.name === selectedUserName);
 
   useEffect(() => {
-    fetch("/api/users/get")
+    fetch("/api/users")
       .then((res) => res.json())
       .then((data) => setUsers(data.users))
       .catch((error) => console.error("Error fetching users:", error));
@@ -58,7 +58,7 @@ export default function Users() {
           className="rounded-xl px-4 py-2 mb-4 font-source text-accent bg-off-black ml-4 mt-4 shadow-xl"
         >
           <option value="">Select a user</option>
-          {users.map((user) => (
+          {users?.map((user) => (
             <option key={user.name} value={user.name}>
               {user.name}
             </option>

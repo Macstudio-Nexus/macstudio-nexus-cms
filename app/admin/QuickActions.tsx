@@ -1,10 +1,9 @@
 "use client";
 import { Primary } from "@/app/components/Buttons";
 import { useState } from "react";
-import ClientProjectModal from "@/app/components/Modals/AddClientProject";
-import PortfolioModal from "@/app/components/Modals/PortfolioModal";
+import ClientProjectModal from "@/app/components/Modals/AddProjectModal";
+import PortfolioModal from "@/app/components/Modals/AddSiteModal";
 import UserModal from "@/app/components/Modals/AddUserModal";
-import BlogPostModal from "@/app/components/Modals/BlogModal";
 
 export default function QuickActions() {
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -18,13 +17,12 @@ export default function QuickActions() {
   };
 
   const QuickButtons = [
+    { label: "New User", action: () => openModal("newUser") },
+    { label: "New Site", action: () => openModal("newSite") },
     {
-      label: "Add Client Project",
-      action: () => openModal("clientProject"),
-    },
-    { label: "Add New User", action: () => openModal("user") },
-    { label: "Add Portfolio", action: () => openModal("portfolio") },
-    { label: "Add Blog Post", action: () => openModal("blogPost") },
+      label: "New Project",
+      action: () => openModal("newProject"),
+    }
   ];
 
   return (
@@ -38,15 +36,12 @@ export default function QuickActions() {
         ))}
       </div>
 
-      {activeModal === "clientProject" && (
+      {activeModal === "newProject" && (
         <ClientProjectModal onCloseAction={closeModal} />
       )}
-      {activeModal === "user" && <UserModal onCloseAction={closeModal} />}
-      {activeModal === "portfolio" && (
+      {activeModal === "newUser" && <UserModal onCloseAction={closeModal} />}
+      {activeModal === "newSite" && (
         <PortfolioModal onCloseAction={closeModal} />
-      )}
-      {activeModal === "blogPost" && (
-        <BlogPostModal onCloseAction={closeModal} />
       )}
     </>
   );

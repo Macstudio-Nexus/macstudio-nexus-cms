@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function UserModal({
+export default function AddUserModal({
   onCloseAction,
 }: {
   onCloseAction: () => void;
@@ -48,11 +48,15 @@ export default function UserModal({
     };
 
     try {
-      const res = await fetch("/api/users/add", {
+      const res = await fetch("/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
 
       const result = await res.json();
       console.log("User added:", result);
@@ -78,7 +82,7 @@ export default function UserModal({
     <div className="modal-container">
       <div className="flex flex-col items-center">
         <h2 className="text-2xl sm:text-3xl sm:pb-4 font-jetbrains font-bold text-center text-dark">
-          Add New User
+          Create New User
         </h2>
 
         <form
@@ -152,8 +156,8 @@ export default function UserModal({
             className="inputfield"
           >
             <option value="">Select Role</option>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
+            <option value="user">Admin</option>
+            <option value="admin">User</option>
             <option value="guest">Guest</option>
           </select>
 
