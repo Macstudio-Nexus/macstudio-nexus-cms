@@ -3,6 +3,7 @@ import "../globals.css";
 import { Secondary } from "@/app/components/Buttons";
 import Header from "@/app/components/Header-Nav/Header";
 import AdminNav from "@/app/components/Header-Nav/AdminNav";
+import Footer from "@/app/components/Footer";
 
 export const metadata: Metadata = {
   title: "Macstudio Nexus CMS Admin",
@@ -24,6 +25,9 @@ export default function AdminLayout({
           <Header title="Admin" button1={<Secondary label="Log Out" />} />
         </header>
         <main className="flex-1 overflow-y-auto">{children}</main>
+      <footer className="sticky bottom-0 w-full">
+        <Footer />
+      </footer>
       </div>
     </div>
   );

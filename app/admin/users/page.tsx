@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 import UserModal from "@/app/components/Modals/AddUserModal";
 import { Primary } from "@/app/components/Buttons";
+import { Loader } from "lucide-react";
 
 interface User {
   id: number;
@@ -18,6 +19,7 @@ interface User {
 export default function Users() {
   const [users, setUsers] = useState<User[]>([]);
   const [activeModal, setActiveModal] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedUserName, setSelectedUserName] = useState<string | null>(null);
 
   const openModal = (modalType: string) => {
@@ -38,25 +40,40 @@ export default function Users() {
   const selectedUser = users?.find((user) => user.name === selectedUserName);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch("/api/users")
       .then((res) => res.json())
-      .then((data) => setUsers(data.users))
-      .catch((error) => console.error("Error fetching users:", error));
+      .then((data) => {
+        setUsers(data.users);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+        setIsLoading(false);
+      });
   }, []);
 
   return (
-    <main className="flex flex-col items-center bg-gradient-to-r from-white to-primary min-h-screen">
+    <main className="page-container">
       <h1 className="page-header">Users</h1>
       <div>
-        <div className="flex flex-col xl:flex-row items-start justify-center gap-6 mb-6">
+        <div className="flex flex-col xl:flex-row items-start justify-center gap-6 my-6">
           {/* Dropdown */}
+          {isLoading ? (
+          <div className="flex items-center gap-5 mt-4 xl:mr-8 bg-primary rounded-xl px-6 py-1 self-center xl:self-start shadow-xl">
+            <Loader size="40" className="animate-[spin_2s_linear_infinite]" />
+            <span className="text-black text-center text-xl md:text-3xl xl:text-4xl">
+              Loading...
+            </span>
+          </div>
+        ) : (
           <select
             value={selectedUserName || ""}
             key={selectedUserName}
             onChange={(e) =>
               setSelectedUserName(String(e.target.value) || null)
             }
-            className="rounded-xl px-4 py-2 mb-4 font-source text-black bg-primary ml-4 mt-3 shadow-xl xl:text-4xl"
+            className="select-dropdown"
           >
             <option value="">Select a user</option>
             {users?.map((user) => (
@@ -65,6 +82,7 @@ export default function Users() {
               </option>
             ))}
           </select>
+        )}
 
           {/* Display selected user data */}
           {selectedUser ? (

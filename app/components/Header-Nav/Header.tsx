@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import AdminNav from "./AdminNav";
 import UserNav from "./UserNav";
+import { Menu, X } from "lucide-react";
 
 interface HeaderProps {
   title: string;
@@ -29,21 +30,9 @@ export default function Header({ button1 }: HeaderProps) {
           <div className="flex sm:hidden">
             <button onClick={toggleMenu} className="pl-4">
               {isMenuOpen ? (
-                <Image
-                  src="/cross-menu-w.png"
-                  alt="Close Menu"
-                  width={100}
-                  height={100}
-                  className="cursor-pointer size-10"
-                />
+                <X color="white" size={40} />
               ) : (
-                <Image
-                  src="/hamburger-menu.svg"
-                  alt="Open Menu"
-                  width={100}
-                  height={100}
-                  className="cursor-pointer size-10"
-                />
+                <Menu color="white" size={40} />
               )}
             </button>
           </div>

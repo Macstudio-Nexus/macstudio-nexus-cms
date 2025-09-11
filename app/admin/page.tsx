@@ -7,11 +7,11 @@ export default function AdminPage() {
       <h1 className="page-header">
         Dashboard
       </h1>
-        <div className="flex flex-col lg:flex-row lg:items-start items-center justify-center p-1 lg:hidden">
+        <div className="flex flex-col lg:flex-row lg:items-start items-center justify-center p-1 my-6 lg:hidden">
           <QuickActions />
           <QuickStats />
         </div>
-        <div className="flex-col lg:flex-row lg:items-start items-center justify-center p-1 hidden lg:flex">
+        <div className="flex-col lg:flex-row lg:items-start items-center justify-center p-1 hidden my-6 lg:flex">
           <QuickStats />
           <QuickActions />
         </div>

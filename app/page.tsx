@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Login from "./components/Login";
-import { LoginFooter } from "./components/Footer";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
     <>
-      <main className="h-auto sm:h-screen pb-25 sm:pb-60 md:pb-30 bg-gradient-to-r from-blue-200 to-primary">
+      <main className="page-container">
           <a
              href="https://macstudionexus.com"
             target="_blank"
@@ -28,7 +28,7 @@ export default function Home() {
         </div>
       </main>
       <footer className="fixed bottom-0 left-0 w-full">
-        <LoginFooter />
+        <Footer />
       </footer>
     </>
   );

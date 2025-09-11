@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const adminMenuItems: { label: string; link: string; isDisabled: boolean }[] = [
   { label: "Dashboard", link: "/admin", isDisabled: false },
-  { label: "Projects", link: "/admin/client-projects", isDisabled: false },
+  { label: "Projects", link: "/admin/projects", isDisabled: false },
   { label: "Users", link: "/admin/users", isDisabled: false },
   { label: "Sites", link: "/admin/sites", isDisabled: false },
   { label: "Blog Posts", link: "/admin/blog", isDisabled: false },

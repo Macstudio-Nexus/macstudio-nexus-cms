@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Loader, CheckCheck } from "lucide-react";
+import { set } from "react-hook-form";
 
 interface User {
   name: string;
@@ -26,6 +28,7 @@ export default function addSiteModal({
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        setIsLoading(true);
         const res = await fetch("/api/users");
         const data = await res.json();
         setUsers(data.users);
@@ -33,6 +36,7 @@ export default function addSiteModal({
         console.error("Error fetching users:", error);
       } finally {
         console.log("Users loaded");
+        setIsLoading(false);
       }
     };
 
@@ -92,7 +96,7 @@ export default function addSiteModal({
       setTimeout(() => {
         setShowSuccess(false);
         onCloseAction();
-      }, 3000);
+      }, 5000);
     } catch (error) {
       console.error("Error adding site:", error);
       setError(
@@ -106,11 +110,12 @@ export default function addSiteModal({
   return (
     <>
       {showSuccess && (
-        <div className="fixed top-1/2 right-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
-          ✅ Successfully added site!
+        <div className="bg-green-500 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 md:w-1/2 xl:w-3/8 z-51 h-1/2 md:h-3/8 text-black font-source text-3xl flex flex-col items-center justify-center rounded-lg shadow-lg">
+          <CheckCheck color="black" size="80" className="" />
+          <span className="text-center">Added Site Successfully</span>
         </div>
       )}
-      
+
       <div className="modal-container">
         <div className="flex flex-col items-center">
           <h2 className="text-2xl sm:text-3xl sm:pb-4 font-jetbrains font-bold text-center text-dark">
@@ -124,8 +129,11 @@ export default function addSiteModal({
           )}
 
           {isLoading ? (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-              Loading...
+            <div className="flex flex-col items-center">
+              <Loader size="40" className="animate-[spin_2s_linear_infinite]" />
+              <span className="text-black text-center text-xl md:text-3xl xl:text-4xl">
+                Loading...
+              </span>
             </div>
           ) : (
             <form

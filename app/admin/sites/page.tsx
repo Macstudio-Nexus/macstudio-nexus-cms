@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 import AddSiteModal from "@/app/components/Modals/AddSiteModal";
 import { Primary } from "@/app/components/Buttons";
+import { Loader } from "lucide-react";
 
 interface Site {
   id: number;
@@ -21,6 +22,7 @@ interface Site {
 export default function Sites() {
   const [sites, setSites] = useState<Site[]>([]);
   const [activeModal, setActiveModal] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedSiteName, setSelectedSiteName] = useState<string | null>(null);
 
   const openModal = (modalType: string) => {
@@ -41,30 +43,52 @@ export default function Sites() {
   const selectedSite = sites?.find((site) => site.name === selectedSiteName);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch("/api/sites")
       .then((res) => res.json())
-      .then((data) => setSites(data.sites))
-      .catch((error) => console.error("Error fetching sites:", error));
+      .then((data) => {
+        setSites(data.sites);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching sites:", error);
+        setIsLoading(false);
+      });
   }, []);
 
   return (
-    <main className="flex flex-col items-center bg-gradient-to-r from-white to-primary min-h-screen">
+    <main className="page-container">
       <h1 className="page-header">Sites</h1>
       {/* Dropdown */}
-      <div className="flex flex-col xl:flex-row items-start justify-center lg:gap-10 mb-6">
-        <select
-          value={selectedSiteName || ""}
-          key={selectedSiteName}
-          onChange={(e) => setSelectedSiteName(String(e.target.value) || null)}
-          className="rounded-xl px-4 py-2 mb-4 font-source text-black bg-primary ml-4 mt-3 shadow-xl xl:text-4xl"
-        >
-          <option value="">Select a site</option>
-          {sites?.map((site) => (
-            <option key={site.name} value={site.name} className="bg-white font-bold">
-              {site.name}
-            </option>
-          ))}
-        </select>
+      <div className="flex flex-col xl:flex-row items-start justify-center lg:gap-10 my-6">
+        {isLoading ? (
+          <div className="flex items-center gap-5 mt-4 xl:mr-8 bg-primary rounded-xl px-6 py-1 self-center xl:self-start shadow-xl">
+            <Loader size="40" className="animate-[spin_2s_linear_infinite]" />
+            <span className="text-black text-center text-xl md:text-3xl xl:text-4xl">
+              Loading...
+            </span>
+          </div>
+        ) : (
+          <select
+            value={selectedSiteName || ""}
+            key={selectedSiteName}
+            onChange={(e) =>
+              setSelectedSiteName(String(e.target.value) || null)
+            }
+            className="select-dropdown"
+          >
+            <option value="">Select a site</option>
+            {sites?.map((site) => (
+              <option
+                key={site.name}
+                value={site.name}
+                className="bg-white font-bold"
+              >
+                {site.name}
+              </option>
+            ))}
+          </select>
+        )}
 
         {/* Display selected site data */}
         {selectedSite ? (
@@ -73,13 +97,20 @@ export default function Sites() {
               <span className="text-accent">{selectedSite.name}</span>
             </h3>
             <p>
-              <strong>Domain:</strong> <span className="text-accent">{selectedSite.domain}</span>
+              <strong>Domain:</strong>{" "}
+              <span className="text-accent">{selectedSite.domain}</span>
             </p>
             <p>
-              <strong>Description:</strong> <span className="text-sm text-accent">{selectedSite.description}</span>
+              <strong>Description:</strong>{" "}
+              <span className="text-sm text-accent">
+                {selectedSite.description}
+              </span>
             </p>
             <p>
-              <strong>Owner:</strong> <span className="text-accent">{selectedSite.user?.name || "Unknown"}</span>
+              <strong>Owner:</strong>{" "}
+              <span className="text-accent">
+                {selectedSite.user?.name || "Unknown"}
+              </span>
             </p>
             <p>
               <strong>Created:</strong>{" "}

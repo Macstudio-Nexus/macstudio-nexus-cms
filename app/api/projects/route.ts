@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
         type: body.type,
         userId: body.userId,
         siteId: body.siteId || null,
-      }
+      },
     });
 
     return NextResponse.json({ project: newProject });
@@ -22,5 +22,19 @@ export async function POST(req: NextRequest) {
     const errorMessage =
       error instanceof Error ? error.message : "An unknown error occurred";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
+  }
+}
+
+// Get all projects
+export async function GET() {
+  try {
+    const projects = await prisma.projects.findMany();
+    return NextResponse.json({ projects });
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    return NextResponse.json(
+      { error: "Could not fetch projects" },
+      { status: 500 }
+    );
   }
 }
