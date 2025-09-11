@@ -3,13 +3,15 @@
 interface ButtonProps {
   label: string;
   handleClick?: () => void;
+  disabled?: boolean;
 }
 
-export function Primary({ label, handleClick}: ButtonProps) {
+export function Primary({ label, handleClick, disabled }: ButtonProps) {
   return (
     <button
       onClick={handleClick}
       className="button button-primary"
+      disabled={disabled}
     >
       {label}
     </button>

@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { Loader, CheckCheck } from "lucide-react";
+import { useSites } from "@/app/hooks/useSites";
+import { useUsers } from "@/app/hooks/useUsers";
+import { set } from "react-hook-form";
 
 interface User {
   name: string;
@@ -13,13 +16,15 @@ interface Site {
   id: number;
 }
 
+interface AddProjectModalProps {
+  onCloseAction: () => void;
+  onSuccess?: () => void;
+}
+
 export default function ClientProjectModal({
   onCloseAction,
-}: {
-  onCloseAction: () => void;
-}) {
-  const [users, setUsers] = useState<User[]>([]);
-  const [sites, setSites] = useState<Site[]>([]);
+  onSuccess,
+}: AddProjectModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const [showSuccess, setShowSuccess] = useState(false);
@@ -32,38 +37,14 @@ export default function ClientProjectModal({
     siteId: "",
   });
 
+  // Use the hooks instead of internal state
+  const { users, fetchUsers } = useUsers();
+  const { sites, fetchSites } = useSites();
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch("/api/users");
-        const data = await res.json();
-        setUsers(data.users);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        console.log("Users loaded");
-        setIsLoading(false);
-      }
-    };
-
-    const fetchSites = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch("/api/sites");
-        const data = await res.json();
-        setSites(data.sites);
-      } catch (error) {
-        console.error("Error fetching sites:", error);
-      } finally {
-        console.log("Sites loaded");
-        setIsLoading(false);
-      }
-    };
-
     fetchUsers();
     fetchSites();
-  }, []);
+  }, [fetchUsers, fetchSites]);
 
   function handleChange(
     e: React.ChangeEvent<
@@ -75,26 +56,24 @@ export default function ClientProjectModal({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-
-    // Map front-end keys to DB columns
-    const data = {
-      title: formData.title,
-      type: formData.type,
-      description: formData.description || null,
-      domain: formData.domain || null,
-      userId: parseInt(formData.user, 10),
-      siteId: formData.siteId ? parseInt(formData.siteId, 10) : null,
-    };
+    setError("");
 
     try {
       setIsLoading(true);
-      setError(""); // Clear previous errors
+
+      const projectData = {
+        title: formData.title,
+        description: formData.description,
+        domain: formData.domain,
+        type: formData.type,
+        userId: parseInt(formData.user, 10),
+        siteId: formData.siteId ? parseInt(formData.siteId, 10) : null,
+      };
 
       const res = await fetch("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(projectData),
       });
 
       if (!res.ok) {
@@ -105,10 +84,10 @@ export default function ClientProjectModal({
       const result = await res.json();
       console.log("Project added:", result);
 
-      // Show success popup
+      // Show success
       setShowSuccess(true);
 
-      // Reset form on success
+      // Reset form
       setFormData({
         user: "",
         title: "",
@@ -118,11 +97,12 @@ export default function ClientProjectModal({
         siteId: "",
       });
 
-      // Auto-hide after 3 seconds and close modal
+      // Call onSuccess and close modal
+      onSuccess?.();
       setTimeout(() => {
         setShowSuccess(false);
         onCloseAction();
-      }, 3000);
+      }, 2000);
     } catch (error) {
       console.error("Error adding project:", error);
       setError(
@@ -225,7 +205,6 @@ export default function ClientProjectModal({
 
               <select
                 name="siteId"
-                required
                 value={formData.siteId}
                 onChange={handleChange}
                 className="inputfield"

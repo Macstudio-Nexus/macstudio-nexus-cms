@@ -2,20 +2,27 @@
 
 import { useState, useEffect } from "react";
 import { Loader, CheckCheck } from "lucide-react";
-import { set } from "react-hook-form";
+import { useSites } from "@/app/hooks/useSites";
+import { useUsers } from "@/app/hooks/useUsers";
 
 interface User {
   name: string;
   id: number;
 }
 
+interface AddSiteModalProps {
+  onCloseAction: () => void;
+  onSuccess?: () => void;
+}
+
 export default function addSiteModal({
   onCloseAction,
-}: {
-  onCloseAction: () => void;
-}) {
-  const [users, setUsers] = useState<User[]>([]);
+  onSuccess,
+}: AddSiteModalProps) {
+  const { createSite } = useSites();
   const [isLoading, setIsLoading] = useState(false);
+
+  const { users, fetchUsers } = useUsers();
   const [error, setError] = useState<string>("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -26,22 +33,8 @@ export default function addSiteModal({
   });
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setIsLoading(true);
-        const res = await fetch("/api/users");
-        const data = await res.json();
-        setUsers(data.users);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        console.log("Users loaded");
-        setIsLoading(false);
-      }
-    };
-
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   function handleChange(
     e: React.ChangeEvent<
@@ -53,38 +46,24 @@ export default function addSiteModal({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-
-    // Use the controlled form state instead of FormData
-    const data = {
-      name: formData.name,
-      domain: formData.domain,
-      userId: parseInt(formData.userId, 10),
-      description: formData.description,
-    };
+    setError("");
 
     try {
       setIsLoading(true);
-      setError(""); // Clear previous errors
 
-      const res = await fetch("/api/sites", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      const siteData = {
+        name: formData.name,
+        domain: formData.domain,
+        description: formData.description,
+        userId: parseInt(formData.userId, 10),
+      };
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || `HTTP error! status: ${res.status}`);
-      }
+      await createSite(siteData);
 
-      const result = await res.json();
-      console.log("Site added:", result);
-
-      // Show success popup
+      // Show success
       setShowSuccess(true);
 
-      // Reset form on success
+      // Reset form
       setFormData({
         name: "",
         domain: "",
@@ -92,11 +71,12 @@ export default function addSiteModal({
         description: "",
       });
 
-      // Auto-hide after 3 seconds and close modal
+      // Call onSuccess and close modal
+      onSuccess?.();
       setTimeout(() => {
         setShowSuccess(false);
         onCloseAction();
-      }, 5000);
+      }, 2000);
     } catch (error) {
       console.error("Error adding site:", error);
       setError(

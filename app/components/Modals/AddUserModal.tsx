@@ -3,11 +3,15 @@
 import { useState } from "react";
 import { Loader, CheckCheck } from "lucide-react";
 
+interface UserModalProps {
+  onCloseAction: () => void;
+  onSuccess?: () => void; // Add this
+}
+
 export default function AddUserModal({
   onCloseAction,
-}: {
-  onCloseAction: () => void;
-}) {
+  onSuccess,
+}: UserModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const [showSuccess, setShowSuccess] = useState(false);
@@ -87,11 +91,12 @@ export default function AddUserModal({
         roleId: "",
       });
 
-      // Auto-hide after 3 seconds and close modal
+      onSuccess?.();
+      // Auto-hide after 2 seconds and close modal
       setTimeout(() => {
         setShowSuccess(false);
         onCloseAction();
-      }, 3000);
+      }, 2000);
     } catch (error) {
       console.error("Error adding user:", error);
       setError(
@@ -201,9 +206,9 @@ export default function AddUserModal({
                 className="inputfield"
               >
                 <option value="">Select Role</option>
-                <option value="user">Admin</option>
-                <option value="admin">User</option>
-                <option value="guest">Guest</option>
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+                <option value="Guest">Guest</option>
               </select>
 
               <div className="flex items-center justify-around pt-4">

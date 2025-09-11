@@ -17,14 +17,14 @@ export default function AdminLayout({
 }>) {
   return (
     <div className="flex h-screen">
-      <nav className=" hidden sm:block sticky top-0 h-screen w-55 md:w-70 bg-dark overflow-y-auto">
+      <nav className=" hidden sm:block sticky top-0 h-screen min-w-55 md:min-w-70 bg-dark overflow-y-auto">
         <AdminNav />
       </nav>
       <div className="flex-1 flex flex-col">
         <header className="sticky top-0 z-50 bg-primary">
           <Header title="Admin" button1={<Secondary label="Log Out" />} />
         </header>
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 overflow-auto min-w-0">{children}</main>
       <footer className="sticky bottom-0 w-full">
         <Footer />
       </footer>

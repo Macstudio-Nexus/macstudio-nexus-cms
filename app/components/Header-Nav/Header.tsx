@@ -43,7 +43,7 @@ export default function Header({ button1 }: HeaderProps) {
         </div>
       </header>
       {isMenuOpen && (
-        <div className="sm:hidden bg-dark shadow-lg w-[14rem] h-full fixed top-18 left-0 z-50">
+        <div className="sm:hidden bg-dark shadow-lg min-w-[14rem] h-full z-50">
           {isAdminPage ? <AdminNav onClickAction={toggleMenu} /> : <UserNav onClickAction={toggleMenu} />}
         </div>
       )}
